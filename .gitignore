@@ -7,8 +7,10 @@
 .externalNativeBuild
 .cxx
 local.properties
-
+.idea
 .idea/
+.idea/jarRepositories.xml
+.idea/.gitignore
 .idea/*.xml
 build/
 

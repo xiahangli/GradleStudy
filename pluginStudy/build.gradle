@@ -17,10 +17,15 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_7
 }
 
+// 指定上传的路径
+def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
+
+
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: uri('../myplugin'))
+            repository(url: localMavenRepo)
+//            repository(url: uri('../myplugin'))
             pom {
                 project {
                     groupId('com.example')

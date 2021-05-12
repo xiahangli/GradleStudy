@@ -1,3 +1,3 @@
 include ':plugin'
 include ':app'
-rootProject.name = "Gradle2"
+rootProject.name = "GradleStudy"

@@ -14,9 +14,11 @@ task zip(type: Zip, group: "Archive", description: "Archives sources in a zip fi
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'MyPlugin'
 
 //
+project.afterEvaluated{
+
+}
 
 
 android {
@@ -90,6 +92,8 @@ Closure<Boolean> isTextFile = {
 Closure<Integer> a = {
     int it -> println("xxxxxxxxxxxxxxxxxxxxxxxxxxx=$it");
 }
+
+
 
 
 setBinding(new Binding() {

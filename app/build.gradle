@@ -130,7 +130,7 @@ project.dependencies {
     }
     annotationProcessor 'com.google.dagger:dagger-compiler:2.31.2'
 //    implementation 'androidx.core:core-ktx:1.2.0'
-//    implementation 'com.android.tools.build:gradle:3.5.2'
+//    implementation 'com.android.tools.build:gradle:4.1.2'
 //    implementation 'androidx.appcompat:appcompat:1.1.0'
 //    implementation 'com.google.android.material:material:1.1.0'
 //    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

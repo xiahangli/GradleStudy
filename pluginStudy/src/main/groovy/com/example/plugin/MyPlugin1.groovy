@@ -52,13 +52,21 @@ public class MyPlugin1 implements Plugin<Project> {
                     //也可以是 def variant->
                     ApplicationVariant variant->
 
+                        //--------------------读取aapt{}的配置
+                        def additionalParams = target.android.aaptOptions.additionalParameters
+                        if (additionalParams == null) {
+                            additionalParams = new ArrayList<>()
+                            target.android.aaptOptions.additionalParameters = additionalParams
+                            println("additionalParams = $additionalParams")
+                        }else{
+                            println("additionalParams11111 = $additionalParams")
+                        }
+                        //--------------------
 
                         //tasks对应getTasks方法，返回TaskContainer实例，这里获取processXXXResource,其中xxx是大写的变体名字，如processDebugResource
 //            "process${variant.name.capitalize()}Resources" 的一个例子是processDebugResource
                         //TODO 注意AndroidConfig.java中有这个属性getAaptOptions,会返回AaptOptions,而AaptOptions中有additionalParameters字段
 //                        def processResourcesTask = target.tasks.findByName("process${variant.name.capitalize()}Resources")
-
-
                         //针对:app:processDebugResources这个task做逻辑处理
 //                        if (processResourcesTask) {
 //                            def properties = processResourcesTask.properties

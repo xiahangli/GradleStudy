@@ -1,0 +1,41 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = "1.4.20"
+    repositories {
+        maven {
+            url './myplugin/'
+        }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:3.5.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.example:plugin:1.0.1"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            url './myplugin/'
+        }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        google()
+        jcenter()
+    }
+}
+
+task copy(type: Copy, group: "sxxx", description: "Copies sources to the dest directory"){
+    from "src"
+    into "dest"
+}
+
+
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

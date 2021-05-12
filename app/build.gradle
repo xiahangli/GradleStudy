@@ -1,0 +1,137 @@
+//plugins {
+//    id 'com.android.application'
+//    id 'kotlin-android'
+//}
+plugins {
+    id "base"
+}
+
+
+task zip(type: Zip, group: "Archive", description: "Archives sources in a zip file") {
+    from "src"
+    setArchiveName "basic-demo-1.0.zip"
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'MyPlugin'
+
+//
+
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        applicationId "com.example.gradle"
+        minSdkVersion 20
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+
+    flavorDimensions "xia"
+    productFlavors {
+        demo {
+            dimension "xia"
+            applicationIdSuffix 'suffix'
+            versionNameSuffix 'versionsuffix'
+            manifestPlaceholders = [hostname: "com.xiahangli"]
+        }
+        prod {
+            dimension 'xia'
+            manifestPlaceholders = [hostname: 'com.prod']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+
+configurations {
+
+}
+
+
+class Delegate {
+    def invokeMethod(String name, args) {
+        println("\n")
+        println('method : ' + name)
+        println('args : ' + args)
+    }
+}
+//在闭包中调用了delegate中也没有的方法demoImplementation,这个时候会调用delegate的invokeMethod,打印如下
+def closure = {
+    demoImplementation1 'com.google.code.gson:gson:2.6.2'
+}
+
+closure.delegate = new Delegate()
+closure()
+
+//使用泛型 声明一个固定返回类型的闭包
+Closure<Boolean> isTextFile = {
+    File it -> println("xxaisfa;osdfjioasdf;j$it") //返回boolean类型
+}
+Closure<Integer> a = {
+    int it -> println("xxxxxxxxxxxxxxxxxxxxxxxxxxx=$it");
+}
+
+
+setBinding(new Binding() {
+
+})
+
+
+//isTextFile(new File())
+//isTextFile(new File());
+configurations.create('myConfiguration')
+configurations.myConfiguration {
+    transitive = false
+}
+
+configurations{
+    myConfig1
+    myIntergrationTestsCompile.extendsFrom(testCompile)
+    print it
+}
+
+a(12)
+project.dependencies {
+//    fileTree(srcDir: "folder", include: "*.jar")
+    implementation(fileTree(dir: "libs", include: ['*.jar']))
+    add("implementation", "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
+    println("\nxiahangli================$delegate")
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
+//    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation('com.google.dagger:dagger:2.31.2')
+    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.2') {
+        exclude group: 'com.square.okio', module: 'okio'
+    }
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.31.2'
+//    implementation 'androidx.core:core-ktx:1.2.0'
+//    implementation 'com.android.tools.build:gradle:3.5.2'
+//    implementation 'androidx.appcompat:appcompat:1.1.0'
+//    implementation 'com.google.android.material:material:1.1.0'
+//    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+//    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+//    demoImplementation "androidx.annotaion:annotation:1.1.0"
+//    implementation project(':plugin')
+}
+

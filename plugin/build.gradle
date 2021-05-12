@@ -1,0 +1,235 @@
+plugins {
+//    id 'java-library'
+    id 'maven'
+}
+
+//构建java应用程序需要java,application插件
+apply plugin: 'java'
+apply plugin: 'application'
+
+//main函数所在路径
+mainClassName = 'com.example.gradle1.App'
+
+//apply plugin: 'com.example.pugin.MyPlugin'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../myplugin'))
+            pom {
+                project {
+                    groupId('com.example')
+                    artifactId = 'plugin'
+                    version = '1.0.1'
+                }
+            }
+        }
+
+    }
+}
+
+task renameGroovyToJava {
+    doLast {
+        delete "$buildDir/classes/java"//删除build目录下的classes目录下的java文件夹
+//        File file = new File("$buildDir/classes/groovy")//保证存在这个陌路
+        File file1 = new File("$buildDir/classes/java1")
+//        file.createNewFile()
+        // file.name = "java" 不行，会报错
+        println "xaiaafasdfs"
+        println file1.renameTo("$buildDir/classes/groovy")
+    }
+
+    println "11111111"
+}
+
+println "1111222222"
+
+// Closure(Object owner, Object thisObject)
+this.getGradle().afterProject { project ->
+    if (project.state.failure) {
+        println "Elaluate afterProject of " + project + " faile1d"
+    } else {
+        println "Elaluate afterProject of " + project + " succes1sed"
+    }
+
+}
+
+allprojects {
+    afterEvaluate { project ->
+        println "Adding test task to $project"
+        project.task('test1') {
+            doLast {
+                println "Running tests for $project"
+            }
+        }
+    }
+}
+
+gradle.afterProject { project ->
+
+    if (project.state.failure) {
+
+        println "Evaluation of $project FAILED"
+
+    } else {
+
+        println "Evaluation of $project succeeded"
+
+    }
+
+}
+
+configurations{
+    myCustomConfiguration
+}
+
+project.ext {
+    myprop = "a"
+}
+//read via extension.«name» and set via extension.«name» = "value"
+assert project.myprop == "a"
+
+//
+//class Person {
+//    String name
+//    int age
+//}
+//def p = new Person()
+//properties
+
+//while (p.properties.keySet()){
+//   Set set =  p.properties.keySet()
+//   Iterator it =  set.iterator()
+//println "=======start"
+//while (it.hasNext()){
+//    println it.next()
+//}
+//println "=======end"
+//     it.next()
+//    set.get
+//}
+//assert p.properties.keySet().containsAll(['name','age','contentHash','originalClassName','class'])
+
+
+def m3 = 'now three words' =~ /\S+\s+\S+/
+assert m3.size() == 1
+
+
+
+
+
+project.ext["otherProp"] = "a111111"
+def aa = project.ext['otherProp']
+println "a============$aa"
+
+
+
+('a'..'d').collect()
+
+List aList = ('a'..'d').collect()
+print(aList)
+
+println "=========project.properties"
+println project.properties
+
+
+def artifact = artifacts{
+
+}
+
+def dependencies1 = dependencies{
+    implementation 'com.google.dagger:dagger:2.31.2'
+}
+
+println ("dependencies1======$dependencies1")
+
+
+task hello(){
+    println "hello task"
+}
+
+tasks.register("task"){
+    println "task11111111"
+}
+
+trait   Named {
+
+    String name1
+    private String name;
+
+    String getName1(){
+       return name1 +"111"
+    }
+}
+
+//Named.class.getDeclaredField('name').type
+
+class Person implements Named{
+    public  String name
+}
+Person.class.getDeclaredField('name').type
+
+
+def p = new Person(name1: 'Bob')
+assert p.name1 == 'Bob111'
+println p.@name
+
+public class Person1 {
+    private String name
+}
+def u = new Person1(name:"Ron")
+println u.@name //Ron
+
+def a1 = {2} >> {3}
+println 'qqqqqqqqqqqqqqqqqq'
+//build_3o7zd3el2q3r1qxlcf5yhnmgs$_run_closure9@2201fe6
+//build_3o7zd3el2q3r1qxlcf5yhnmgs$_run_closure10@1f20ab66
+//build_3o7zd3el2q3r1qxlcf5yhnmgs$_run_closure10@79e0e439
+//build_3o7zd3el2q3r1qxlcf5yhnmgs$_run_closure10@1f20ab66
+println a1.@second //first closure object
+
+
+//assert p.getName1() == 'Bob111'
+
+configurations{
+    myConfig
+    print "config11111="+it
+
+}
+
+dependencies {
+    fileTree(dir:"libs",excludes: ['**/ignore/**','**/.svn/**'])
+//    myCustomConfiguration (group: 'org.myorg', name: 'someLib', version:'1.0')
+    //configuring dependency to specific configuration of the module
+//    implementation configuration: 'someConf', group: 'org.someOrg', name: 'someModule', version: '1.0'
+//def  a = implementation fileTree('dirs')
+    //configuring dependency on 'someLib' module
+   /* implementation(group: 'org.myorg', name: 'someLib', version:'1.0') {
+        //explicitly adding the dependency artifact:
+        artifact {
+            //useful when some artifact properties unconventional
+            name = 'someArtifact' //artifact name different than module name
+            extension = 'someExt'
+            type = 'someType'
+            classifier = 'someClassifier'
+        }
+    }*/
+}
+
+
+//apply plugin: 'groovy'
+//引入 groovy 插件，groovy 插件继承了 java 插件
+apply plugin: 'groovy'//加载main函数要用到
+
+project.dependencies {
+    implementation gradleApi()//使用Plugin等类
+//    implementation localGroovy()//使用groovy语言
+    add("implementation",localGroovy())
+
+   implementation "com.android.tools.build:gradle:3.5.2"
+}

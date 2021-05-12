@@ -12,11 +12,15 @@ task zip(type: Zip, group: "Archive", description: "Archives sources in a zip fi
     setArchiveName "basic-demo-1.0.zip"
 }
 
+//这里的com.android.application的名字和com.android.tools.build:gradle:3.5.3/META-INF/gradle-plugins/com.android.application.properties中的com.android.application一一对应
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+//apply plugin: 'MyPlugin'
 
 //
-
+//project.afterEvaluated{
+//
+//}
 
 
 android {

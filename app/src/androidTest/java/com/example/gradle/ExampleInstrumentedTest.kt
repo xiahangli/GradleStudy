@@ -32,7 +32,7 @@ class ExampleInstrumentedTest {
     }
 
     @Test
-    @Throws(Exception::class)
+//    @Throws(Exception::class)
     fun testAssertThat() {
 //        assertThat("xxxx", `is`(equalTo("xxxx")))
         assertThat(
@@ -42,7 +42,7 @@ class ExampleInstrumentedTest {
     }
 
     @Test
-    @Throws(Exception::class)
+//    @Throws(Exception::class)
     fun testAssertEquals() {
         assertEquals(
             "auiehaeiueahuiheauihaeuieahuiaehuieahuaiehiaueheauihaeuihaeuiaehuiaehuiaehuiaehaeuihaei",

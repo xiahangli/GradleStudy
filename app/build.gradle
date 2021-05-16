@@ -149,8 +149,8 @@ project.dependencies {
     androidTestImplementation project(path:':httpwrapper')
 }
 
-android.testVariants.all { variant ->
-    println "variant = $variant"
-    variant.getCompileConfiguration().exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
-    variant.getRuntimeConfiguration().exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
-}
+//android.testVariants.all { variant ->
+//    println "variant = $variant"
+//    variant.getCompileConfiguration().exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
+//    variant.getRuntimeConfiguration().exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
+//}

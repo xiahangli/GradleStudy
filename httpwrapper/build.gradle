@@ -63,6 +63,12 @@ class Foo extends DefaultTask{}
  * 为什么可以写type：Foo，因为这里定义了TASK_TYPE="type",如果你写了myTask1(dependsOns:JavaCompile,type:Foo)
  * 就会出现下面的
  * : Could not create task 'myTask1': Unknown argument(s) in task definition: [dependsOns]
+ * 报错是在(可以全局搜索) private static void validateArgs(Map<String, ?> args) {*         if (!VALID_TASK_ARGUMENTS.containsAll(args.keySet())) {*             Map<String, Object> unknownArguments = new HashMap<String, Object>(args);
+ *             unknownArguments.keySet().removeAll(VALID_TASK_ARGUMENTS);
+ *             throw new InvalidUserDataException(String.format("Could not create task '%s': Unknown argument(s) in task definition: %s",
+ *                 args.get(Task.TASK_NAME), unknownArguments.keySet()));
+ *}
+ *     }
  *   String TASK_NAME = "name";
  *
  *     String TASK_DESCRIPTION = "description";
@@ -78,13 +84,32 @@ class Foo extends DefaultTask{}
  *     String TASK_ACTION = "action";
  */
 
-task myTask1(dependsOns:JavaCompile,type:Foo) {//可以看到具体的实例是Foo_Decorated@xxxx实例,也就是A的装饰者
+task myTask1(dependsOn:JavaCompile,type:Foo) {//可以看到具体的实例是Foo_Decorated@xxxx实例,也就是A的装饰者
     //it的toString =task ':httpwrapper:myTask1'
     A a= new A()
+
     doLast {}
 }
 
+
+class AA{
+    String TASK_ACTION = "action";
+
+    private static final Set<String> VALID_TASK_ARGUMENTS =new HashSet(new ArrayList());
+    AA(){
+        VALID_TASK_ARGUMENTS.add(TASK_ACTION)
+    }
+    def test(){
+//        print "xxxx == "+ VALID_TASK_ARGUMENTS
+        println("xxxx")
+    }
+}
+
+//AA a =new AA(action:"xxxx")
+//a.test()
+
 Closure c = {
+
    doLast {}
 }
 //project.task(project.myTask([type: Foo.class], c))

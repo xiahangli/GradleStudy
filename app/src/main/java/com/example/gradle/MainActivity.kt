@@ -14,6 +14,7 @@ import android.widget.TextView
 import com.example.gradle.Dependency.DependencyKey
 import com.example.gradle.Dependency.TIME_TICK_HANDLER
 import com.example.gradle.twitter.MyFragment
+//import org.threeten.bp.chrono.HijrahDate
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 
@@ -27,7 +28,7 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+//        var dd =  HijrahDate.now()
 //        val myClass1 = MyClass1()
        BitmapDrawable().setColorFilter( ColorMatrixColorFilter(ColorMatrix().apply {
             setSaturation(10f);

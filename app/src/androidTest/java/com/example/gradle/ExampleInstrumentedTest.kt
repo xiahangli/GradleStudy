@@ -12,6 +12,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.threeten.bp.chrono.HijrahDate
+import java.time.chrono.JapaneseDate
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -22,6 +24,8 @@ import org.junit.runner.RunWith
 class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
+        //使用jackwharthon.androidthreeten依赖的库
+        var dd =  HijrahDate.now()
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertThat("com.example.gradle",CoreMatchers.equalTo("com.example.gradle1111"));

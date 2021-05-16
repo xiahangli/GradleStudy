@@ -39,3 +39,8 @@ task copy(type: Copy, group: "sxxx", description: "Copies sources to the dest di
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+//运行所有的依赖
+subprojects {
+    task fullDependencies(type: DependencyReportTask) {}
+}

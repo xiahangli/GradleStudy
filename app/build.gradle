@@ -24,8 +24,14 @@ apply plugin: 'kotlin-android'
 
 
 android {
-    compileSdkVersion 27
 
+
+
+    compileSdkVersion 27
+    //支持test orchestrator
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
     defaultConfig {
         applicationId "com.example.gradle"
         minSdkVersion 20
@@ -33,7 +39,13 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        //支持android orchestrator
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // The following argument makes the Android Test Orchestrator run its
+        // "pm clear" command after each test invocation. This command ensures
+        // that the app's state is completely cleared between tests.
+        testInstrumentationRunnerArguments clearPackageData: 'true'
     }
 
     compileOptions{
@@ -146,9 +158,22 @@ project.dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 //    demoImplementation "androidx.annotaion:annotation:1.1.0"
 //    implementation project(':plugin')
-    androidTestImplementation project(path:':httpwrapper')
-}
+    //a test configuration (e.g., androidTestImplementation) extends the module's
+    // (eg com.jakewharton.threetenabp:threetenabp:1.0.0)
+    // implementation configuration.
 
+    //You can still use the exclude keyword in the dependencies block as shown
+    // in the original code sample from the Exclude dependencies section to omit transitive dependencies
+    // that are specific to the test configuration and are not included in other configurations.
+    androidTestImplementation ("com.jakewharton.threetenabp:threetenabp:1.0.0"){
+        exclude group: 'corg.threeten', module: 'threetenbp'
+    }
+
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestUtil 'androidx.test:orchestrator:1.1.0'
+    androidTestWearApp 'androidx.test:orchestrator:1.1.0'
+}
+//https://github.com/JakeWharton/ThreeTenABP/blob/trunk/sample/build.gradle
 //android.testVariants.all { variant ->
 //    println "variant = $variant"
 //    variant.getCompileConfiguration().exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'

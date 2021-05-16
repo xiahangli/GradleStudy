@@ -2,8 +2,10 @@ package com.example.gradle
 
 //import androidx.test.runner.AndroidJUnit4
 
+import android.app.Application
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.jakewharton.threetenabp.AndroidThreeTen
 import org.hamcrest.CoreMatchers
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -22,7 +24,10 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        Assert.assertThat("com.example.gradle",CoreMatchers.equalTo("com.example.gradle1111"));
+        assertThat("com.example.gradle",CoreMatchers.equalTo("com.example.gradle1111"));
+        //使用android.testVariants,通过TestVariantImpl的getCompileConfiguration().exclude(group:"xxx",module:"xxx")
+        //来让这里的AndroidThreeTen不可访问
+        AndroidThreeTen.init(appContext as Application);
 //        assertEquals("com.example.gradle", appContext.packageName)
     }
 

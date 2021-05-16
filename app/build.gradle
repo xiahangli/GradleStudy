@@ -36,6 +36,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_9
+        sourceCompatibility JavaVersion.VERSION_1_9
+    }
+
 
     flavorDimensions "xia"
     productFlavors {
@@ -57,10 +62,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -128,6 +133,8 @@ project.dependencies {
     implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.2') {
         exclude group: 'com.square.okio', module: 'okio'
     }
+//org.threeten.bp.chrono
+    apk "com.jakewharton.threetenabp:threetenabp:1.0.0"
     annotationProcessor 'com.google.dagger:dagger-compiler:2.31.2'
 //    implementation 'androidx.core:core-ktx:1.2.0'
 //    implementation 'com.android.tools.build:gradle:4.1.2'
@@ -139,5 +146,11 @@ project.dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 //    demoImplementation "androidx.annotaion:annotation:1.1.0"
 //    implementation project(':plugin')
+    androidTestImplementation project(path:':httpwrapper')
 }
 
+android.testVariants.all { variant ->
+    println "variant = $variant"
+    variant.getCompileConfiguration().exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
+    variant.getRuntimeConfiguration().exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
+}

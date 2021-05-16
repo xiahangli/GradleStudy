@@ -23,6 +23,9 @@ allprojects {
         maven {
             url './myplugin/'
         }
+        maven{
+            url "https://jitpack.io/"
+        }
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         jcenter()
@@ -41,6 +44,7 @@ task clean(type: Delete) {
 }
 
 //运行所有的依赖
+//https://stackoverflow.com/questions/36536561/is-there-a-way-to-list-all-gradle-dependencies-programmatically
 subprojects {
     task fullDependencies(type: DependencyReportTask) {}
 }

@@ -43,6 +43,9 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+
+
+
 //运行所有的依赖
 //https://stackoverflow.com/questions/36536561/is-there-a-way-to-list-all-gradle-dependencies-programmatically
 subprojects {

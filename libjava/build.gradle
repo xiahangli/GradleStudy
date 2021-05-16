@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+    id 'war'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+
+//引入war plugin
+//依赖于war任务，war任务在war插件中定义，这里的deploy是Copy类型的任务
+//这里通过调用task
+task deploy (dependsOn: war, type: Copy) {
+    from "build/libs"
+    into "webapps"//destDir – Path to the destination directory for a Copy
+    include "*.war"//string... includes – a vararg list of include patterns
+}

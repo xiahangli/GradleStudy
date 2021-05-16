@@ -51,11 +51,35 @@ task mycopy(type:Copy){
 //    into dest
 }
 
-tasks.register("myCpy",Copy){
-    //从src目录拷贝到dest目录
+
+//参见TaskContainer的
+// <T extends Task> TaskProvider<T> register(String name, Class<T> type, Action<? super T> configurationAction) throws InvalidUserDataException;
+
+
+def someMethod(parameter1, parameter2 = 12, parameter3 = 0) {
+   def a =  parameter2 +1
+    println "a 11111========="+a
+    // Method code goes here
+}
+
+someMethod(4,123)
+
+tasks.register("myCpy",Copy,"wode"){
+//    print("it ="+it+"\n")
+
+    //从src目录拷贝到dest目录，dest目录不一定要有
     from 'src'
     into 'dest'
 }
+
+//tasks.register("myCpy1",Copy.class,new Action<Copy>(){
+//    @Override
+//    void execute(org.gradle.api.tasks.Copy copy) {
+//
+//    }
+//})
+
+
 
 //copy {
 //    from configurations.runtimeClasspath

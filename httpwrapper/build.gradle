@@ -44,13 +44,89 @@ dependencies {
 
 
 
-task mycopy(type:Copy){
-//    from project.rootDir.getAbsolutePath
-//    from
-//    from 'source'
-//    into dest
+task mycopy(type:Copy.class){
+    from 'src'
+    into 'dest'
 }
 
+
+//project.task(project.mycopy1(type:Copy.class){
+//    from 'src'
+//    into 'dest'
+//})
+
+//注意Foo需要实现Task接口,由于接口方法太多，可以继承DefaultTask
+//同时Foo.class可以省去.class
+class A{}
+class Foo extends DefaultTask{}
+/**
+ * 为什么可以写type：Foo，因为这里定义了TASK_TYPE="type",如果你写了myTask1(dependsOns:JavaCompile,type:Foo)
+ * 就会出现下面的
+ * : Could not create task 'myTask1': Unknown argument(s) in task definition: [dependsOns]
+ *   String TASK_NAME = "name";
+ *
+ *     String TASK_DESCRIPTION = "description";
+ *
+ *     String TASK_GROUP = "group";
+ *
+ *     String TASK_TYPE = "type";
+ *
+ *     String TASK_DEPENDS_ON = "dependsOn";
+ *
+ *     String TASK_OVERWRITE = "overwrite";
+ *
+ *     String TASK_ACTION = "action";
+ */
+
+task myTask1(dependsOns:JavaCompile,type:Foo) {//可以看到具体的实例是Foo_Decorated@xxxx实例,也就是A的装饰者
+    //it的toString =task ':httpwrapper:myTask1'
+    A a= new A()
+    doLast {}
+}
+
+Closure c = {
+   doLast {}
+}
+//project.task(project.myTask([type: Foo.class], c))
+//https://stackoverflow.com/questions/56906489/gradle-task-syntax-how-is-it-explained-from-a-groovy-perspective
+
+//class MyBean {
+//   void include(String pattern) {...}
+//   void exclude(String pattern) {...}
+//}
+//class MyClass {
+//   private MyBean myBean = new MyBean()
+//   void doStuff(Closure c) {
+//     c.setDelegate(myBean)
+//      c.call()//call closure,it delegate to MyBean's instance
+//   }
+//}
+//
+//def o = new MyClass()
+//so {include 'foo',exclude 'bar'}is a Closure
+//o.doStuff {
+//   include 'foo'
+//   exclude 'bar'
+//}
+
+
+//注意我这里传入了closure到project的myTask方法中，但是Project类没这个方法
+//Let's add some brackets and also add the implicit project references.
+// Let's also extract the closure into a variable
+//Closure c = {
+//   doLast {...}
+//}
+//project.task(project.myTask([type: Foo.class], c))
+//The project.myTask(...) method doesn't exist,但是project.task方法存在
+// and the behavior is ultimately implemented via methodMissing functionality.
+//注意这里的methodMissing就是我们说的MixIn方式
+//Gradle will set the delegate on the closure to the task instance.
+// So any methods in the closure will delegate to the newly created task.
+//Ultimately, here's what's logically called,注意这里代理到新创建的任务，也就是这里的task->中的task
+//Action<? extends Task> action = { task ->
+//   task.doLast {...}
+//}
+//project.tasks.create('myTask', Foo.class, action)
 
 //参见TaskContainer的
 // <T extends Task> TaskProvider<T> register(String name, Class<T> type, Action<? super T> configurationAction) throws InvalidUserDataException;
@@ -63,6 +139,32 @@ def someMethod(parameter1, parameter2 = 12, parameter3 = 0) {
 }
 
 someMethod(4,123)
+
+//TODO 学习灵活初始化熟悉值 https://blog.csdn.net/cckevincyh/article/details/75094293
+class Robot{
+    def type111,height,width
+    def access(location, weight, fragile){
+        println "Received fragile? $fragile,weight: $weight,loc:$location"
+    }
+    Robot(){}//编译器默认添加的
+}
+
+//以逗号分隔的key:value对来为属性值初始化，如果类有一个无参构造器，该操作会在构造器之后执行
+Robot robot = new Robot(type111:'arm',width:10,height:40)
+println "===hehe======$robot.type111,$robot.height,$robot.width"
+//只要指定类型，与顺序无关
+robot = new Robot(width:10,height:40,type111:'arm')
+println "===hehe1======$robot.type111,$robot.height,$robot.width"
+//robot.ac
+
+robot.access(12,50,true)
+//注意只保留这里第一个参数被推断出来为整形
+//只保留这个的话，这里推断出来是linkedhashmap,下面的x:12,y:13.z:13为map结构
+robot.access(x:12,y:13,z:14,50,true)
+//同时保留以上两个为serializable
+
+
+
 
 tasks.register("myCpy",Copy,"wode"){
 //    print("it ="+it+"\n")

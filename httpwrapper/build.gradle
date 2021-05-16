@@ -34,10 +34,30 @@ dependencies {
     //测试的依赖
     //prodDebugCompileClasspath
     testApi 'com.android.databinding:adapters:4.1.3'
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
 //    api "com.jakewharton.threetenabp:threetenabp:1.0.0"
 }
+
+
+
+task mycopy(type:Copy){
+//    from project.rootDir.getAbsolutePath
+//    from
+//    from 'source'
+//    into dest
+}
+
+tasks.register("myCpy",Copy){
+    //从src目录拷贝到dest目录
+    from 'src'
+    into 'dest'
+}
+
+//copy {
+//    from configurations.runtimeClasspath
+//    into 'build/deploy/lib'
+//}

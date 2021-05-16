@@ -1,8 +1,7 @@
 package com.example.gradle
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.threeten.bp.chrono.HijrahDate
 
 /**
@@ -15,5 +14,6 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
         var dd =  HijrahDate.now()
+//        val a = AbsListViewBindingAdapter()
     }
 }
